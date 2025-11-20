@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [servo1, setServo1] = useState(0);
@@ -7,6 +7,16 @@ export default function Home() {
   const [servo3, setServo3] = useState(0);
   const [servo4, setServo4] = useState(0);
   const [servo5, setServo5] = useState(0);
+
+  useEffect(() => {
+    fetch("192.168.1.82:8000/servo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        servo1, servo2, servo3, servo4, servo5
+      }),
+    });
+  }, [servo1, servo2, servo3, servo4, servo5]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
